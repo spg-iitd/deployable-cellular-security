@@ -46,24 +46,24 @@ Vagrant.configure("2") do |config|
     # Open5gs VM bootstrap provisioning with a shell script.
     open5gs.vm.provision "shell", :privileged => true, inline: <<-SHELL
       echo "---------Updating packages--------"
-      sudo apt-get update -y > /dev/null
+      sudo apt-get update -y 
       
       echo "---------Installing Open5GS--------"
-      sudo apt-get install -y wget screen net-tools gnupg cmake python3-pip python3-setuptools python3-wheel ninja-build build-essential flex bison git libsctp-dev libgnutls28-dev libgcrypt-dev libssl-dev libidn11-dev libmongoc-dev libbson-dev libyaml-dev libnghttp2-dev libmicrohttpd-dev libcurl4-gnutls-dev libnghttp2-dev libtins-dev libtalloc-dev meson screen > /dev/null
+      sudo apt-get install -y wget screen net-tools gnupg cmake python3-pip python3-setuptools python3-wheel ninja-build build-essential flex bison git libsctp-dev libgnutls28-dev libgcrypt-dev libssl-dev libidn11-dev libmongoc-dev libbson-dev libyaml-dev libnghttp2-dev libmicrohttpd-dev libcurl4-gnutls-dev libnghttp2-dev libtins-dev libtalloc-dev meson screen 
       curl -fsSL https://pgp.mongodb.com/server-6.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-6.0.gpg --dearmor
       echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
-      sudo apt-get update -y  > /dev/null
-      sudo apt-get install -y mongodb-org > /dev/null
+      sudo apt-get update -y  
+      sudo apt-get install -y mongodb-org 
       sudo systemctl enable mongod 
       sudo systemctl start mongod 
       
       sudo cp -r /LoadOpen5gs/ /home/vagrant/open5gs/
       sudo sh /home/vagrant/open5gs/misc/netconf.sh 
       cd /home/vagrant/open5gs
-      meson build --prefix=`pwd`/install > /dev/null
-      ninja -C build > /dev/null
+      sudo meson build --prefix=`pwd`/install 
+      sudo ninja -C build 
       cd build
-      ninja install > /dev/null
+      sudo ninja install 
       cd /home/vagrant/
       
       echo "---------Copying to root folders--------"
@@ -75,12 +75,12 @@ Vagrant.configure("2") do |config|
       echo "---------Finished installing Open5GS ------"
       
       echo "---------Installing Node and and building WebUI------"
-      sudo -E bash /load-node/install_node  > /dev/null
-      sudo apt-get install -y nodejs yarn  > /dev/null
+      sudo -E bash /load-node/install_node  
+      sudo apt-get install -y nodejs yarn  
       
       cd /home/vagrant/open5gs/webui/
-      sudo npm ci > /dev/null
-      sudo npm run build  > /dev/null
+      sudo npm ci 
+      sudo npm run build  
       
       echo "--------Loading the test configs -------------"
       sudo cp -r /configs/open5gs-config/* /home/vagrant/open5gs/install/etc/
@@ -131,11 +131,11 @@ Vagrant.configure("2") do |config|
     # #Enable provisioning with a shell script.
     ueransim.vm.provision "shell", :privileged => true, inline:<<-SHELL 
       echo "---------Updating packages --------"
-      sudo apt-get update -y > /dev/null
+      sudo apt-get update -y 
 
       echo "---------Installing Dependencies--------"
-      sudo apt-get install make g++ libsctp-dev lksctp-tools iproute2 net-tools screen -y #> /dev/null
-      sudo snap install cmake --classic > /dev/null
+      sudo apt-get install make g++ libsctp-dev lksctp-tools iproute2 net-tools screen -y 
+      sudo snap install cmake --classic 
 
       echo "---------Compiling UERANSIM--------"
       sudo cp -r /LoadUeransim/ /home/vagrant/UERANSIM/
