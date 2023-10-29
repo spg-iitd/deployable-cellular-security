@@ -10,6 +10,8 @@ def running_rosetta()
 end
 
 Vagrant.configure("2") do |config|
+  config.vagrant.plugins = "vagrant-proxyconf"
+  config.vm.box_check_update = false
 
   # Checking and changing the box based on the architecture 
   # This will be common in all VMs launched
